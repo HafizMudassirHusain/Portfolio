@@ -6,6 +6,7 @@ import Portfolio from './sections/Portfolio'
 import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 import Navbar from './sections/Navbar'
+import Testimonials from './sections/Testimonials'
 
 function App() {
   return (
@@ -29,9 +30,14 @@ function App() {
           <Portfolio />
         </section>
 
+        <section id="test">
+          <Testimonials />
+        </section>
+        
         <section id="contact">
           <Contact />
         </section>
+
 
         <Footer />
       </div>

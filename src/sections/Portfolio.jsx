@@ -78,7 +78,7 @@ export default function Portfolio() {
     : projects.filter(project => project.tags.includes(activeFilter));
 
   return (
-    <section className="relative bg-neutral-50 dark:bg-gray-900 py-20 px-4 sm:px-6 lg:px-8">
+    <section className="relative bg-gradient-to-b from-teal-50 to-white dark:bg-gray-900 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
