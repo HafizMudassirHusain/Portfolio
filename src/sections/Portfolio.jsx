@@ -7,6 +7,7 @@ import img4 from '../assets/postfoliosMy.png';
 import img5 from '../assets/malickrestuarent.png';
 import img6 from '../assets/advantureweb.png';
 
+
 const projects = [
   {
     id: 1,
