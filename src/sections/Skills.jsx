@@ -49,7 +49,7 @@ const skillCategories = [
       { name: 'React', level: 90 },
       { name: 'JavaScript', level: 95 },
       { name: 'TypeScript', level: 85 },
-      { name: 'HTML/CSS', level: 100 },
+      { name: 'XML/HTML/CSS', level: 100 },
       { name: 'Tailwind CSS', level: 90 },
       { name: 'Next.js', level: 80 }
     ]
@@ -62,6 +62,7 @@ const skillCategories = [
       { name: 'Node.js', level: 85 },
       { name: 'Express', level: 80 },
       { name: 'Python', level: 75 },
+      { name: 'Java', level: 70 },
       { name: 'Django', level: 70 },
       { name: 'GraphQL', level: 75 }
     ]
@@ -93,23 +94,22 @@ const skillCategories = [
 // Experience Timeline (unchanged)
 const experienceItems = [
   {
-    year: '2023 - Present',
-    role: 'Senior Frontend Developer',
-    company: 'TechCorp',
+    year: '2025 - Present',
+    role: 'Senior Web Developer',
+    company: 'TazQ Solution',
     description: 'Leading the frontend team building responsive web applications with React and Next.js'
   },
   {
-    year: '2020 - 2023',
-    role: 'Frontend Developer',
-    company: 'WebSolutions',
+    year: '2025 - Present',
+    role: 'Full_Stack Developer',
+    company: 'HS_Solutions',
     description: 'Developed and maintained multiple client projects using modern JavaScript frameworks'
   },
   {
-    year: '2018 - 2020',
-    role: 'Junior Developer',
-    company: 'StartUp Inc',
-    description: 'Assisted in building the company\'s main product and learned industry best practices'
-  }
+    year: '2023 - Present',
+    role: 'CLient Dealing',
+    company: 'Blitz Wings',
+    description: 'Managed client relationships and supported product development, implementing best practices in [specific area, e.g., customer onboarding, feedback analysis].'   }
 ];
 
 // Stats Section (updated colors)

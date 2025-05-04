@@ -15,26 +15,26 @@ const projects = [
     tags: ['React', 'Node.js', 'MongoDB'],
     image: img1,
     description: 'Full-featured online store with payment integration',
-    link: '#',
-    github: '#'
+    link: 'https://furniro1.vercel.app/',
+    github: 'https://github.com/HafizMudassirHusain/Furniro'
   },
   {
     id: 2,
-    title: 'Portfolio Website',
-    tags: ['Next.js', 'Tailwind CSS'],
+    title: 'Restuarent Website',
+    tags: ['Next.js', 'Tailwind CSS', 'MongoDB'],
     image: img2,
     description: 'A modern, responsive portfolio website to showcase projects and blogs.',
-    link: '#',
-    github: '#'
+    link: 'https://al-frontend-eight.vercel.app/',
+    github: 'https://github.com/HafizMudassirHusain/AL-Frontend'
   },
   {
     id: 3,
-    title: 'Task Management App',
+    title: 'Agencies Web App',
     tags: ['React', 'Firebase'],
     image: img3,
     description: 'A task tracking app with real-time updates and user authentication.',
-    link: '#',
-    github: '#'
+    link: 'https://tazq-frontend.vercel.app/',
+    github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
   },
   {
     id: 4,
@@ -42,8 +42,8 @@ const projects = [
     tags: ['React', 'Firebase'],
     image: img4,
     description: 'A second version portfolio showcasing animation and SEO practices.',
-    link: '#',
-    github: '#'
+    link: 'https://tazq-frontend.vercel.app/',
+    github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
   },
   {
     id: 5,
@@ -51,8 +51,8 @@ const projects = [
     tags: ['React', 'Tailwind'],
     image: img5,
     description: 'A restaurant landing page with a menu, contact form, and booking system.',
-    link: '#',
-    github: '#'
+    link: 'https://dumi-maliksresturent.netlify.app/',
+    github: 'https://github.com/HafizMudassirHusain/JS-Assignment/tree/master/MaliksFoodsResturent'
   },
   {
     id: 6,
@@ -60,8 +60,8 @@ const projects = [
     tags: ['React', 'GSAP'],
     image: img6,
     description: 'A visually rich adventure site with parallax scroll effects.',
-    link: '#',
-    github: '#'
+    link: 'https://adventureguidence.netlify.app/',
+    github: 'https://github.com/HafizMudassirHusain/SecAdvantureweb'
   },
 ];
 

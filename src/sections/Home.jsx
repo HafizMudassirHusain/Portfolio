@@ -1,15 +1,43 @@
 import myImage from '../assets/perf.png';
 import { FiCode, FiUser, FiDownload } from 'react-icons/fi';
 import { motion } from 'framer-motion';
-import bg from '../assets/bg.png'
+import bg from '../assets/bg.png';
+// Make sure to import your CV file (adjust the path as needed)
+import cvFile from '../assets/backendCv.pdf';
+
 export default function Home() {
+  // Function to handle the download
+  const handleDownload = () => {
+    try {
+      // Create a temporary anchor element
+      const link = document.createElement('a');
+      
+      // Use the imported file or a public path
+      link.href = cvFile;
+      
+      // Suggest a filename for the download
+      link.download = 'HafizMudassir_Cv.pdf'; // Change to your name
+      
+      // Append to the document, trigger click, then remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Optional: Track download event
+      console.log('CV downloaded successfully');
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+      // You could add a toast notification here
+      alert('Failed to download CV. Please try again later.');
+    }
+  };
+
   return (
-<div className="relative h-screen flex items-center bg-[#00b899] text-gray-100 overflow-hidden">
-    {/* Soft Texture Overlay */}
-    <div className={`absolute inset-0 bg-[url(${bg})] opacity-10 pointer-events-none`}></div>
+    <div className="relative h-screen flex items-center bg-[#00b899] text-gray-100 overflow-hidden">
+      {/* Soft Texture Overlay */}
+      <div className={`absolute inset-0 bg-[url(${bg})] opacity-10 pointer-events-none`}></div>
 
-<div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
+      <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Left Text */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -20,6 +48,7 @@ export default function Home() {
           <p className="text-xl mb-8 text-teal-600">Crafting immersive digital experiences</p>
 
           <motion.button
+            onClick={handleDownload}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-8 py-3 rounded-lg bg-teal-600 hover:bg-teal-700 transition-colors text-white font-medium shadow-lg flex items-center gap-2"
