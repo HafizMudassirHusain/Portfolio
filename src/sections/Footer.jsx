@@ -7,22 +7,22 @@ export default function Footer() {
   const socialLinks = [
     {
       icon: <FiGithub className="text-xl" />,
-      url: "https://github.com/yourusername",
+      url: "https://github.com/HafizMudassirHusain",
       name: "GitHub"
     },
     {
       icon: <FiLinkedin className="text-xl" />,
-      url: "https://linkedin.com/in/yourusername",
+      url: "https://linkedin.com/in/hafiz-mudassir-husain",
       name: "LinkedIn"
     },
     {
       icon: <FiTwitter className="text-xl" />,
-      url: "https://twitter.com/yourusername",
+      url: "https://www.instagram.com/hafizmudassirhusain/",
       name: "Twitter"
     },
     {
       icon: <FiMail className="text-xl" />,
-      url: "mailto:hello@example.com",
+      url: "mailto:hmudassir511@gmail.com",
       name: "Email"
     }
   ];
@@ -111,7 +111,7 @@ export default function Footer() {
                   <FiMail />
                 </div>
                 <div>
-                  <p className="text-teal-100">hello@example.com</p>
+                  <p className="text-teal-100">hmudassir511@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -119,7 +119,7 @@ export default function Footer() {
                   <FiLinkedin />
                 </div>
                 <div>
-                  <p className="text-teal-100">linkedin.com/in/yourusername</p>
+                  <p className="text-teal-100">in/hafiz-mudassir-husain</p>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function Footer() {
           className="flex flex-col md:flex-row justify-between items-center text-center"
         >
           <p className="text-teal-300 mb-4 md:mb-0">
-            &copy; {currentYear} Your Name. All rights reserved.
+            &copy; {currentYear} Hafiz Mudassir. All rights reserved.
           </p>
           <p className="text-teal-200 flex items-center">
             Made with <FiHeart className="mx-1 text-rose-400" /> using React & Tailwind CSS
