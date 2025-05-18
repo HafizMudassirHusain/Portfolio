@@ -115,8 +115,8 @@ const experienceItems = [
 // Stats Section (updated colors)
 const stats = [
   { icon: <FiAward />, value: '12+', label: 'Projects', color: COLORS.accent.bg },
-  { icon: <FiClock />, value: '5+', label: 'Years Exp', color: COLORS.primary.bg },
-  { icon: <FiUsers />, value: '8', label: 'Clients', color: COLORS.secondary.bg },
+  { icon: <FiClock />, value: '1+', label: 'Years Exp', color: COLORS.primary.bg },
+  { icon: <FiUsers />, value: '12', label: 'Clients', color: COLORS.secondary.bg },
   { icon: <FiCheckCircle />, value: '100%', label: 'Satisfaction', color: COLORS.accent.bg }
 ];
 

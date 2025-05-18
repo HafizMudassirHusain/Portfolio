@@ -126,7 +126,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-bold text-white">React Expert</h4>
-                  <p className="text-sm text-white">5+ years experience</p>
+                  <p className="text-sm text-white">1+ years experience</p>
                 </div>
               </div>
             </motion.div>

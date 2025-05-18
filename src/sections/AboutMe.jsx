@@ -23,7 +23,7 @@ export default function AboutMe() {
   const stats = [
     { icon: <FiBriefcase />, value: '5+', label: 'Years Experience' },
     { icon: <FiAward />, value: '12', label: 'Projects Completed' },
-    { icon: <FiUser />, value: '8', label: 'Happy Clients' }
+    { icon: <FiUser />, value: '12', label: 'Happy Clients' }
   ];
 
   return (
@@ -115,7 +115,7 @@ export default function AboutMe() {
                   </div>
                   <div>
                     <h4 className="font-bold text-white">Frontend Specialist</h4>
-                    <p className="text-sm text-teal-100">5+ years experience</p>
+                    <p className="text-sm text-teal-100">1+ years experience</p>
                   </div>
                 </div>
               </motion.div>
