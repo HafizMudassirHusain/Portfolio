@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiHeart } from 'react-icons/fi';
+import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiHeart, FiInstagram } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +16,7 @@ export default function Footer() {
       name: "LinkedIn"
     },
     {
-      icon: <FiTwitter className="text-xl" />,
+      icon: <FiInstagram className="text-xl" />,
       url: "https://www.instagram.com/hafizmudassirhusain/",
       name: "Twitter"
     },
