@@ -4,24 +4,24 @@ import { FaSearch, FaPaintBrush, FaLaptopCode } from 'react-icons/fa';
 import images from '../assets/perf.png';
 
 export default function AboutMe() {
-  // Color theme variables
-  const colors = {
-    primary: 'text-teal-500',
-    primaryBg: 'bg-teal-500',
-    secondary: 'text-teal-400',
-    secondaryBg: 'bg-teal-600',
-    dark: 'text-gray-800',
-    darkBg: 'bg-teal-800',
-    light: 'text-white',
-    lightBg: 'bg-teal-600',
-    cardBg: 'bg-white',
-    overlay: 'bg-teal-900/20',
-    buttonBg: 'bg-teal-600',
-    buttonHover: 'hover:bg-teal-700'
-  };
+  // // Color theme variables
+  // const colors = {
+  //   primary: 'text-teal-500',
+  //   primaryBg: 'bg-teal-500',
+  //   secondary: 'text-teal-400',
+  //   secondaryBg: 'bg-teal-600',
+  //   dark: 'text-gray-800',
+  //   darkBg: 'bg-teal-800',
+  //   light: 'text-white',
+  //   lightBg: 'bg-teal-600',
+  //   cardBg: 'bg-white',
+  //   overlay: 'bg-teal-900/20',
+  //   buttonBg: 'bg-teal-600',
+  //   buttonHover: 'hover:bg-teal-700'
+  // };
 
   const stats = [
-    { icon: <FiBriefcase />, value: '5+', label: 'Years Experience' },
+    { icon: <FiBriefcase />, value: '3+', label: 'Years Experience' },
     { icon: <FiAward />, value: '12', label: 'Projects Completed' },
     { icon: <FiUser />, value: '12', label: 'Happy Clients' }
   ];
@@ -114,8 +114,8 @@ export default function AboutMe() {
                     <FiCode className="text-xl text-teal-500" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white">Frontend Specialist</h4>
-                    <p className="text-sm text-teal-100">1+ years experience</p>
+                    <h4 className="font-bold text-white">Full-Stack Specialist</h4>
+                    <p className="text-sm text-teal-100">3+ years experience</p>
                   </div>
                 </div>
               </motion.div>

@@ -125,8 +125,8 @@ export default function Home() {
                   <FiCode className="text-xl text-teal-600" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-white">React Expert</h4>
-                  <p className="text-sm text-white">1+ years experience</p>
+                  <h4 className="font-bold text-white">Full-Stack Expert</h4>
+                  <p className="text-sm text-white">3+ years experience</p>
                 </div>
               </div>
             </motion.div>

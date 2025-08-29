@@ -49,8 +49,8 @@ const skillCategories = [
       { name: 'React', level: 90 },
       { name: 'JavaScript', level: 95 },
       { name: 'TypeScript', level: 85 },
-      { name: 'XML/HTML/CSS', level: 100 },
-      { name: 'Tailwind CSS', level: 90 },
+      { name: 'XML/HTML/CSS/Tailwind CSS', level: 100 },
+      { name: 'React Native', level: 90 },
       { name: 'Next.js', level: 80 }
     ]
   },
@@ -64,7 +64,7 @@ const skillCategories = [
       { name: 'Python', level: 75 },
       { name: 'Java', level: 70 },
       { name: 'Django', level: 70 },
-      { name: 'GraphQL', level: 75 }
+      { name: 'Postgree', level: 75 }
     ]
   },
   {
@@ -94,19 +94,19 @@ const skillCategories = [
 // Experience Timeline (unchanged)
 const experienceItems = [
   {
-    year: '2025 - Present',
+    year: '2025 Feb - Present',
     role: 'Senior Web Developer',
     company: 'TazQ Solution',
-    description: 'Leading the frontend team building responsive web applications with React and Next.js'
+    description: 'Leading the frontend team building responsive web applications with Modern frameworks'
   },
   {
-    year: '2025 - Present',
-    role: 'Full_Stack Developer',
-    company: 'HS_Solutions',
+    year: '2025 June - Present',
+    role: 'Frontend Engineer',
+    company: 'Intelik Immutable Inteligence',
     description: 'Developed and maintained multiple client projects using modern JavaScript frameworks'
   },
   {
-    year: '2023 - Present',
+    year: 'Feb 2023 -July 2025',
     role: 'CLient Dealing',
     company: 'Blitz Wings',
     description: 'Managed client relationships and supported product development, implementing best practices in [specific area, e.g., customer onboarding, feedback analysis].'   }
@@ -115,7 +115,7 @@ const experienceItems = [
 // Stats Section (updated colors)
 const stats = [
   { icon: <FiAward />, value: '12+', label: 'Projects', color: COLORS.accent.bg },
-  { icon: <FiClock />, value: '1+', label: 'Years Exp', color: COLORS.primary.bg },
+  { icon: <FiClock />, value: '3+', label: 'Years Exp', color: COLORS.primary.bg },
   { icon: <FiUsers />, value: '12', label: 'Clients', color: COLORS.secondary.bg },
   { icon: <FiCheckCircle />, value: '100%', label: 'Satisfaction', color: COLORS.accent.bg }
 ];

@@ -4,11 +4,29 @@ import img1 from '../assets/ecom.png';
 import img2 from '../assets/kitchen.png';
 import img3 from '../assets/tazQ.png';
 import img4 from '../assets/port.png';
-import img5 from '../assets/malickrestuarent.png';
+import img5 from '../assets/fahracity.png';
 import img6 from '../assets/advantureweb.png';
 const projects = [
   {
     id: 1,
+    title: 'Agencies Web App',
+    tags: ['React', 'Firebase'],
+    image: img3,
+    description: 'A task tracking app with real-time updates and user authentication.',
+    link: 'https://www.tazqsolutions.com/',
+    github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
+  },
+  {
+    id: 2,
+    title: 'Tech Company',
+    tags: ['Next', 'Tailwind','Node.js', 'MongoDB'],
+    image: img5,
+    description: 'A Tech Company website built with Next.js, Tailwind CSS, Node.js, and MongoDB.',
+    link: 'https://fahracity-updated.vercel.app/',
+    github: 'https://github.com/HafizMudassirHusain/faracity'
+  },
+  {
+    id: 3,
     title: 'E-commerce Platform',
     tags: ['React', 'Node.js', 'MongoDB'],
     image: img1,
@@ -17,7 +35,7 @@ const projects = [
     github: 'https://github.com/HafizMudassirHusain/Furniro'
   },
   {
-    id: 2,
+    id: 4,
     title: 'Restuarent Website',
     tags: ['Next.js', 'Tailwind CSS', 'MongoDB'],
     image: img2,
@@ -26,31 +44,13 @@ const projects = [
     github: 'https://github.com/HafizMudassirHusain/AL-Frontend'
   },
   {
-    id: 3,
-    title: 'Agencies Web App',
-    tags: ['React', 'Firebase'],
-    image: img3,
-    description: 'A task tracking app with real-time updates and user authentication.',
-    link: 'https://tazq-frontend.vercel.app/',
-    github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
-  },
-  {
-    id: 4,
+    id: 5,
     title: 'Portfolio 2.0',
     tags: ['React', 'Firebase'],
     image: img4,
     description: 'A second version portfolio showcasing animation and SEO practices.',
-    link: 'https://tazq-frontend.vercel.app/',
-    github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
-  },
-  {
-    id: 5,
-    title: 'Restaurant Website',
-    tags: ['React', 'Tailwind'],
-    image: img5,
-    description: 'A restaurant landing page with a menu, contact form, and booking system.',
-    link: 'https://dumi-maliksresturent.netlify.app/',
-    github: 'https://github.com/HafizMudassirHusain/JS-Assignment/tree/master/MaliksFoodsResturent'
+    link: 'https://hafizmudassirhusain.netlify.app/',
+    github: 'https://github.com/HafizMudassirHusain/orgnlwhiteport'
   },
   {
     id: 6,
