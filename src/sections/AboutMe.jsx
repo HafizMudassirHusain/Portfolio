@@ -41,21 +41,25 @@ export default function AboutMe() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-teal-500">
               About Me
             </h2>
-            <p className="text-xl mb-6 text-gray-600">
-              I'm a passionate frontend developer with a focus on creating immersive digital experiences.
-            </p>
-            
-            <div className="space-y-4 text-gray-600">
-              <p>
-                My journey in web development started in college when I built my first website. Since then, I've worked with startups and established companies to bring their digital visions to life.
-              </p>
-              <p>
-                I specialize in React ecosystem and modern JavaScript frameworks, with a strong eye for design and user experience. When I'm not coding, you can find me hiking, photography, or playing guitar.
-              </p>
-              <p>
-                My approach combines technical expertise with creative problem-solving to deliver solutions that are both functional and beautiful.
-              </p>
-            </div>
+          <p className="text-xl mb-6 text-gray-600">
+  I'm a dedicated <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-teal-500">Full Stack Developer</span> passionate about building seamless, scalable, and impactful digital solutions.
+</p>
+
+<div className="space-y-4 text-gray-600">
+  <p>
+    My journey into web and app development began during my college years, where I developed my first interactive project. Since then, I’ve collaborated with startups and organizations to design and develop end-to-end solutions that solve real-world problems.
+  </p>
+  <p>
+    I specialize in the <span className="font-medium">React ecosystem, Node.js, and modern JavaScript frameworks</span>, backed by solid experience in database management and backend APIs. With a strong eye for design and user experience, I bridge the gap between front-end creativity and back-end functionality.
+  </p>
+  <p>
+    Beyond coding, I enjoy exploring new technologies, working on side projects, and learning continuously. My problem-solving mindset allows me to craft solutions that are not only technically sound but also intuitive for users.
+  </p>
+  <p>
+    My mission is to combine <span className="font-medium">technical expertise</span> with <span className="font-medium">creative thinking</span> to build digital experiences that inspire, engage, and deliver measurable value.
+  </p>
+</div>
+
 
             {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-4 mt-8">
