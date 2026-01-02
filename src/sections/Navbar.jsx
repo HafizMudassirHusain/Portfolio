@@ -6,8 +6,30 @@ import { AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check localStorage first, then system preference
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('darkMode');
+      if (saved !== null) {
+        return saved === 'true';
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
   const [scrolled, setScrolled] = useState(false);
+
+  // Initialize and sync dark mode with DOM
+  useEffect(() => {
+    const html = document.documentElement;
+    
+    // Always sync state with DOM
+    if (darkMode) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,8 +48,19 @@ export default function Navbar() {
   ];
 
   const toggleTheme = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle('dark');
+    const newDarkMode = !darkMode;
+    
+    // Update state - useEffect will handle DOM update
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', String(newDarkMode));
+    
+    // Also update DOM immediately for instant feedback
+    const html = document.documentElement;
+    if (newDarkMode) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
   };
 
   return (
@@ -36,7 +69,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-teal-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+        scrolled ? 'bg-teal-900/95 dark:bg-gray-950/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 py-4">
@@ -65,11 +98,11 @@ export default function Navbar() {
                 smooth={true}
                 duration={500}
                 offset={-80}
-                className="relative text-teal-100 hover:text-white cursor-pointer transition-colors group"
+                className="relative text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white cursor-pointer transition-colors group"
               >
                 {link.name}
                 <motion.span
-                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 dark:bg-teal-500 transition-all duration-300 group-hover:w-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                 />
@@ -77,28 +110,42 @@ export default function Navbar() {
             ))}
 
             {/* Theme Toggle */}
-            <button
+            {/* <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-teal-800 text-teal-200 hover:bg-teal-700 transition-colors"
+              className="p-2 rounded-full bg-teal-800 dark:bg-gray-700 text-teal-200 dark:text-teal-400 hover:bg-teal-700 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-110 active:scale-95"
               aria-label="Toggle dark mode"
             >
-              {darkMode ? <FiSun /> : <FiMoon />}
-            </button>
+              <motion.div
+                key={darkMode ? 'sun' : 'moon'}
+                initial={{ opacity: 0, rotate: -180 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+              </motion.div>
+            </button> */}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <button
+            {/* <button
               onClick={toggleTheme}
-              className="p-2 mr-4 rounded-full bg-teal-800 text-teal-200 hover:bg-teal-700 transition-colors"
+              className="p-2 mr-4 rounded-full bg-teal-800 dark:bg-gray-700 text-teal-200 dark:text-teal-400 hover:bg-teal-700 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-110 active:scale-95"
               aria-label="Toggle dark mode"
             >
-              {darkMode ? <FiSun /> : <FiMoon />}
-            </button>
+              <motion.div
+                key={darkMode ? 'sun' : 'moon'}
+                initial={{ opacity: 0, rotate: -180 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+              </motion.div>
+            </button> */}
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-full bg-teal-800 text-teal-200 hover:bg-teal-700 transition-colors"
+              className="p-2 rounded-full bg-teal-800 dark:bg-gray-700 text-teal-200 dark:text-teal-400 hover:bg-teal-700 dark:hover:bg-gray-600 transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -115,7 +162,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden bg-teal-900/95 backdrop-blur-sm"
+            className="md:hidden overflow-hidden bg-teal-900/95 dark:bg-gray-950/95 backdrop-blur-sm"
           >
             <div className="container mx-auto px-6 py-4">
               <div className="flex flex-col space-y-4">
@@ -127,7 +174,7 @@ export default function Navbar() {
                     duration={500}
                     offset={-80}
                     onClick={() => setIsOpen(false)}
-                    className="text-teal-100 hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 transition-colors cursor-pointer"
+                    className="text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                   >
                     {link.name}
                   </Link>

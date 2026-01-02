@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="./src/assets/hmh.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HMH</title>
+    <script>
+      // Set dark mode BEFORE React loads to prevent flash
+      (function() {
+        const saved = localStorage.getItem('darkMode');
+        const shouldBeDark = saved === 'true' || 
+          (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (shouldBeDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

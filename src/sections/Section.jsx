@@ -1,69 +1,44 @@
-// Section.jsx with GSAP
+// Section.jsx - Simplified version using Framer Motion instead of GSAP
 import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import useMotionPreferences from './MotionPreferences' // ✅ make sure this import is correct
+import { motion } from 'framer-motion'
+
+// Simple hook to check for reduced motion preference
+const useMotionPreferences = () => {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
 
 export default function Section({ id, children, direction, isActive }) {
   const sectionRef = useRef(null)
-
-  // ✅ Call your custom hook here — inside the component body
   const reduceMotion = useMotionPreferences()
 
-  // Animation effect based on motion preferences
+  // Focus management for accessibility
   useEffect(() => {
-    if (!sectionRef.current) return
-
-    if (reduceMotion) {
-      sectionRef.current.style.opacity = isActive ? 1 : 0
-    } else {
-      gsap.to(sectionRef.current, {
-        opacity: isActive ? 1 : 0,
-        x: isActive ? 0 : (direction === 'right' ? 100 : -100),
-        duration: 0.8
-      })
-    }
-  }, [isActive, direction, reduceMotion])
-
-  // Entrance animation effect
-  useEffect(() => {
-    if (!sectionRef.current) return
-
-    if (isActive) {
+    if (isActive && sectionRef.current) {
       sectionRef.current.focus()
-      gsap.fromTo(
-        sectionRef.current,
-        {
-          opacity: 0,
-          x: direction === 'right' ? 100 : -100,
-          scale: 0.95
-        },
-        {
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "power3.out"
-        }
-      )
-    } else {
-      gsap.to(sectionRef.current, {
-        opacity: 0,
-        x: direction === 'right' ? -100 : 100,
-        scale: 0.95,
-        duration: 0.5
-      })
     }
-  }, [isActive, direction])
+  }, [isActive])
+
+  const animationProps = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, x: direction === 'right' ? 100 : -100, scale: 0.95 },
+        animate: isActive
+          ? { opacity: 1, x: 0, scale: 1 }
+          : { opacity: 0, x: direction === 'right' ? -100 : 100, scale: 0.95 },
+        transition: { duration: 0.8, ease: "easeOut" }
+      }
 
   return (
-    <div
+    <motion.div
       ref={sectionRef}
       id={id}
       className="absolute inset-0 flex items-center justify-center text-4xl font-bold"
       tabIndex={-1}
       aria-hidden={!isActive}
+      {...animationProps}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }

@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
-import { FaGithub, FaLinkedin, FaTwitter, FaDribbble, FaInstagram, FaFacebook } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Initialize EmailJS (you should call this once in your app)
-// Typically you would put this in a useEffect or in your app initialization
-emailjs.init('Pv3yL9ioNcyiGiaxV'); // Replace with your EmailJS public key
+gsap.registerPlugin(ScrollTrigger);
+
+emailjs.init('Pv3yL9ioNcyiGiaxV');
 
 const socialLinks = [
   { name: 'GitHub', icon: <FaGithub className="w-6 h-6" />, url: 'https://github.com/HafizMudassirHusain' },
@@ -19,13 +20,23 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '', // Added subject field
+    subject: '',
     message: ''
   });
   
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const subheadingRef = useRef(null);
+  const contactInfoHeadingRef = useRef(null);
+  const contactMethodsRef = useRef([]);
+  const socialLinksRef = useRef([]);
+  const formFieldsRef = useRef([]);
+  const submitButtonRef = useRef(null);
+  const shineRef = useRef(null);
 
   const validate = () => {
     const newErrors = {};
@@ -35,7 +46,7 @@ export default function Contact() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    if (!formData.subject.trim()) newErrors.subject = 'Subject is required'; // Validate subject
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
     if (!formData.message.trim()) newErrors.message = 'Message is required';
     return newErrors;
   };
@@ -52,14 +63,13 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Send email using EmailJS
       const response = await emailjs.send(
-        'service_kj0ipdq', // Replace with your EmailJS service ID
-        'template_ax35b4d', // Replace with your EmailJS template ID
+        'service_kj0ipdq',
+        'template_ax35b4d',
         {
           from_name: formData.name,
           from_email: formData.email,
-          subject: formData.subject, // Include subject
+          subject: formData.subject,
           message: formData.message
         }
       );
@@ -104,66 +114,264 @@ export default function Contact() {
     }
   ];
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Heading animations
+      gsap.from(headingRef.current, {
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: -30,
+        duration: 1,
+        ease: 'power3.out'
+      });
+
+      gsap.from(subheadingRef.current, {
+        scrollTrigger: {
+          trigger: subheadingRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        delay: 0.2,
+        ease: 'power2.out'
+      });
+
+      // Contact info heading
+      if (contactInfoHeadingRef.current) {
+        gsap.from(contactInfoHeadingRef.current, {
+          scrollTrigger: {
+            trigger: contactInfoHeadingRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          x: -30,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      }
+
+      // Contact methods stagger
+      contactMethodsRef.current.forEach((method, index) => {
+        if (!method) return;
+        
+        gsap.from(method, {
+          scrollTrigger: {
+            trigger: method,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          x: -50,
+          duration: 0.6,
+          delay: index * 0.15,
+          ease: 'power3.out'
+        });
+
+        // Hover effect
+        method.addEventListener('mouseenter', () => {
+          gsap.to(method, {
+            x: 10,
+            scale: 1.02,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+
+        method.addEventListener('mouseleave', () => {
+          gsap.to(method, {
+            x: 0,
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      });
+
+      // Social links stagger
+      socialLinksRef.current.forEach((link, index) => {
+        if (!link) return;
+        
+        gsap.from(link, {
+          scrollTrigger: {
+            trigger: link,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          scale: 0,
+          rotation: -180,
+          duration: 0.6,
+          delay: index * 0.1,
+          ease: 'back.out(1.7)'
+        });
+
+        // Hover effect
+        link.addEventListener('mouseenter', () => {
+          gsap.to(link, {
+            y: -5,
+            scale: 1.1,
+            rotation: 360,
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+        });
+
+        link.addEventListener('mouseleave', () => {
+          gsap.to(link, {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            duration: 0.4,
+            ease: 'power2.out'
+          });
+        });
+      });
+
+      // Form fields stagger
+      formFieldsRef.current.forEach((field, index) => {
+        if (!field) return;
+        
+        gsap.from(field, {
+          scrollTrigger: {
+            trigger: field,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          delay: index * 0.1,
+          ease: 'power2.out'
+        });
+
+        // Focus animation
+        const input = field.querySelector('input, textarea');
+        if (input) {
+          input.addEventListener('focus', () => {
+            gsap.to(field, {
+              scale: 1.02,
+              duration: 0.2,
+              ease: 'power2.out'
+            });
+          });
+
+          input.addEventListener('blur', () => {
+            gsap.to(field, {
+              scale: 1,
+              duration: 0.2,
+              ease: 'power2.out'
+            });
+          });
+        }
+      });
+
+      // Submit button shine effect
+      if (submitButtonRef.current && shineRef.current) {
+        const shineTimeline = gsap.timeline({ paused: true });
+        shineTimeline.to(shineRef.current, {
+          x: '100%',
+          duration: 0.6,
+          ease: 'power2.inOut'
+        });
+
+        submitButtonRef.current.addEventListener('mouseenter', () => {
+          gsap.to(submitButtonRef.current, {
+            scale: 1.05,
+            y: -2,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+          shineTimeline.restart();
+        });
+
+        submitButtonRef.current.addEventListener('mouseleave', () => {
+          gsap.to(submitButtonRef.current, {
+            scale: 1,
+            y: 0,
+            duration: 0.3,
+            ease: 'power2.out'
+          });
+        });
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="w-full bg-gradient-to-b from-teal-50 to-white"
+    <div
+      ref={sectionRef}
+      className="w-full bg-gradient-to-b from-teal-50 to-white dark:from-slate-900 dark:to-slate-800 transition-colors duration-500"
       id="contact"
     >
       <div className="container mx-auto px-6 py-12">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-teal-500">
+        <h2
+          ref={headingRef}
+          className="text-4xl md:text-5xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-teal-500 dark:from-teal-400 dark:to-teal-300"
+        >
           Get In Touch
         </h2>
-        <p className="text-xl text-center mb-12 max-w-2xl mx-auto text-gray-600">
+        <p
+          ref={subheadingRef}
+          className="text-xl text-center mb-12 max-w-2xl mx-auto text-gray-600 dark:text-gray-300"
+        >
           Have a project in mind or want to collaborate? Feel free to reach out!
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-bold mb-6 text-teal-700">Contact Information</h3>
+            <h3
+              ref={contactInfoHeadingRef}
+              className="text-2xl font-bold mb-6 text-teal-700 dark:text-teal-300"
+            >
+              Contact Information
+            </h3>
             <div className="space-y-6">
               {contactMethods.map((method, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
+                  ref={el => contactMethodsRef.current[index] = el}
                   className="flex items-start gap-4"
                 >
-                  <div className="p-3 rounded-full bg-teal-100 text-teal-600">
+                  <div className="p-3 rounded-full bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-400">
                     {method.icon}
                   </div>
                   <div>
-                    <h4 className="font-medium text-lg text-gray-800">{method.title}</h4>
+                    <h4 className="font-medium text-lg text-gray-800 dark:text-gray-200">{method.title}</h4>
                     <a 
                       href={method.href} 
-                      className="text-teal-600 hover:text-teal-800 transition"
+                      className="text-teal-600 dark:text-teal-400 hover:text-teal-800 dark:hover:text-teal-300 transition"
                     >
                       {method.value}
                     </a>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             <div className="mt-12">
-              <h3 className="text-2xl font-bold mb-6 text-teal-700">Follow Me</h3>
+              <h3 className="text-2xl font-bold mb-6 text-teal-700 dark:text-teal-300">Follow Me</h3>
               <div className="flex gap-4">
-                {socialLinks.map(({ name, icon, url }) => (
-                  <motion.a
+                {socialLinks.map(({ name, icon, url }, index) => (
+                  <a
                     key={name}
+                    ref={el => socialLinksRef.current[index] = el}
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-3 rounded-full bg-teal-100 hover:bg-teal-200 transition text-teal-600"
+                    className="p-3 rounded-full bg-teal-100 dark:bg-teal-900 hover:bg-teal-200 dark:hover:bg-teal-800 transition text-teal-600 dark:text-teal-400"
                     aria-label={`Follow on ${name}`}
                   >
                     {icon}
-                  </motion.a>
+                  </a>
                 ))}
               </div>
             </div>
@@ -171,118 +379,91 @@ export default function Contact() {
 
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <label htmlFor="name" className="block mb-2 font-medium text-gray-800">Name</label>
+              <div ref={el => formFieldsRef.current[0] = el}>
+                <label htmlFor="name" className="block mb-2 font-medium text-gray-800 dark:text-gray-200">Name</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-lg bg-white border ${errors.name ? 'border-red-500' : 'border-teal-200'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm`}
+                  className={`w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-800 border ${errors.name ? 'border-red-500' : 'border-teal-200 dark:border-slate-700'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm text-gray-900 dark:text-slate-100 transition-all duration-500`}
                 />
                 {errors.name && <p className="mt-1 text-red-500">{errors.name}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <label htmlFor="email" className="block mb-2 font-medium text-gray-800">Email</label>
+              <div ref={el => formFieldsRef.current[1] = el}>
+                <label htmlFor="email" className="block mb-2 font-medium text-gray-800 dark:text-gray-200">Email</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-lg bg-white border ${errors.email ? 'border-red-500' : 'border-teal-200'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm`}
+                  className={`w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-800 border ${errors.email ? 'border-red-500' : 'border-teal-200 dark:border-slate-700'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm text-gray-900 dark:text-slate-100 transition-all duration-500`}
                 />
                 {errors.email && <p className="mt-1 text-red-500">{errors.email}</p>}
-              </motion.div>
+              </div>
 
-              {/* Added Subject Field */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35 }}
-              >
-                <label htmlFor="subject" className="block mb-2 font-medium text-gray-800">Subject</label>
+              <div ref={el => formFieldsRef.current[2] = el}>
+                <label htmlFor="subject" className="block mb-2 font-medium text-gray-800 dark:text-gray-200">Subject</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-lg bg-white border ${errors.subject ? 'border-red-500' : 'border-teal-200'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm`}
+                  className={`w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-800 border ${errors.subject ? 'border-red-500' : 'border-teal-200 dark:border-slate-700'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm text-gray-900 dark:text-slate-100 transition-all duration-500`}
                 />
                 {errors.subject && <p className="mt-1 text-red-500">{errors.subject}</p>}
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                <label htmlFor="message" className="block mb-2 font-medium text-gray-800">Message</label>
+              <div ref={el => formFieldsRef.current[3] = el}>
+                <label htmlFor="message" className="block mb-2 font-medium text-gray-800 dark:text-gray-200">Message</label>
                 <textarea
                   id="message"
                   name="message"
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 rounded-lg bg-white border ${errors.message ? 'border-red-500' : 'border-teal-200'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm`}
+                  className={`w-full px-4 py-3 rounded-lg bg-white dark:bg-slate-800 border ${errors.message ? 'border-red-500' : 'border-teal-200 dark:border-slate-700'} focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent shadow-sm text-gray-900 dark:text-slate-100 transition-all duration-500`}
                 />
                 {errors.message && <p className="mt-1 text-red-500">{errors.message}</p>}
-              </motion.div>
+              </div>
 
               {errors.submit && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="p-3 bg-red-100 border border-red-200 rounded-lg text-red-700"
-                >
+                <div className="p-3 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300">
                   {errors.submit}
-                </motion.div>
+                </div>
               )}
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
+              <div>
                 <button
+                  ref={submitButtonRef}
                   type="submit"
                   disabled={isSubmitting}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition ${isSubmitting ? 'bg-teal-700' : 'bg-teal-600 hover:bg-teal-700'} text-white shadow-lg hover:shadow-xl`}
+                  className="relative flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition overflow-hidden bg-teal-600 dark:bg-teal-700 hover:bg-teal-700 dark:hover:bg-teal-600 text-white shadow-lg hover:shadow-xl disabled:bg-teal-700 dark:disabled:bg-teal-800"
                 >
-                  {isSubmitting ? (
-                    'Sending...'
-                  ) : (
-                    <>
-                      <FiSend /> Send Message
-                    </>
-                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isSubmitting ? 'Sending...' : <><FiSend /> Send Message</>}
+                  </span>
+                  <span
+                    ref={shineRef}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+                    style={{ transform: 'skewX(-20deg)' }}
+                  />
                 </button>
-              </motion.div>
+              </div>
 
               {submitSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-teal-100 border border-teal-200 rounded-lg text-teal-800"
-                >
+                <div className="p-4 bg-teal-100 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-700 rounded-lg text-teal-800 dark:text-teal-300">
                   Message sent successfully! I'll get back to you soon.
-                </motion.div>
+                </div>
               )}
             </form>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

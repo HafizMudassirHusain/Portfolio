@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AiOutlineClose, AiOutlineGithub, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import { FiExternalLink } from 'react-icons/fi';
@@ -13,6 +13,14 @@ export default function ProjectModal({ project, onClose }) {
     project.image, // would be different images in real implementation
     project.image
   ];
+
+  const handleNext = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % projectImages.length);
+  }, [projectImages.length]);
+
+  const handlePrev = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length);
+  }, [projectImages.length]);
 
   // Close modal on ESC key
   useEffect(() => {
@@ -31,15 +39,7 @@ export default function ProjectModal({ project, onClose }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose, currentImageIndex]);
-
-  const handleNext = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % projectImages.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + projectImages.length) % projectImages.length);
-  };
+  }, [onClose, handleNext, handlePrev]);
 
   return (
     <AnimatePresence>
@@ -103,7 +103,7 @@ export default function ProjectModal({ project, onClose }) {
 
             {/* Full page screenshot */}
             <div 
-              className={`w-full h-full flex items-center justify-center overflow-auto cursor-${isZoomed ? 'zoom-out' : 'zoom-in'}`}
+              className={`w-full h-full flex items-center justify-center overflow-auto ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}
               onClick={() => setIsZoomed(!isZoomed)}
             >
               <img
