@@ -280,11 +280,11 @@ export default function Home() {
           <div ref={ctaRef} className="relative inline-block overflow-hidden">
             <button
               ref={ctaButtonRef}
-              onClick={handleDownload}
+            onClick={handleDownload}
               className="relative px-8 py-3 rounded-lg bg-teal-600 dark:bg-teal-700 hover:bg-teal-700 dark:hover:bg-teal-600 transition-all duration-300 text-white font-medium shadow-lg flex items-center gap-2 overflow-hidden"
-            >
+          >
               <span className="relative z-10 flex items-center gap-2">
-                <FiDownload /> Download CV
+            <FiDownload /> Download CV
               </span>
               <span
                 ref={shineRef}
@@ -293,7 +293,7 @@ export default function Home() {
               />
             </button>
           </div>
-        </div>
+          </div>
 
         {/* Right Section - Image with AboutMe-style treatment */}
         <div ref={imageContainerRef} className="relative w-full flex justify-center">
@@ -331,8 +331,8 @@ export default function Home() {
                   <h4 className="font-bold text-white dark:text-slate-100 transition-colors duration-500">Full-Stack Expert</h4>
                   <p className="text-sm text-teal-50 dark:text-teal-300 transition-colors duration-500">3+ years experience</p>
                 </div>
+                </div>
               </div>
-            </div>
 
             <div
               ref={badge2Ref}
@@ -346,8 +346,8 @@ export default function Home() {
                   <h4 className="font-bold text-white dark:text-slate-100 transition-colors duration-500">UI/UX Designer</h4>
                   <p className="text-sm text-teal-50 dark:text-teal-300 transition-colors duration-500">User-first approach</p>
                 </div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { FiExternalLink, FiGithub } from 'react-icons/fi';
 import ProjectModal from './ProjectModal';
 import img1 from '../assets/ecom.png';
 import img2 from '../assets/kitchen.png';
@@ -6,10 +8,10 @@ import img3 from '../assets/tazQ.png';
 import img4 from '../assets/port.png';
 import img5 from '../assets/fahracity.png';
 import img6 from '../assets/advantureweb.png';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+/* =======================
+   PROJECT DATA
+======================= */
 
 const projects = [
   {
@@ -17,16 +19,16 @@ const projects = [
     title: 'Agencies Web App',
     tags: ['React', 'Firebase'],
     image: img3,
-    description: 'A task tracking app with real-time updates and user authentication.',
+    description: 'A comprehensive task tracking application with real-time updates, user authentication, and seamless collaboration features.',
     link: 'https://www.tazqsolutions.com/',
     github: 'https://github.com/HafizMudassirHusain/TazqFrontend'
   },
   {
     id: 2,
-    title: 'Tech Company',
-    tags: ['Next', 'Tailwind','Node.js', 'MongoDB'],
+    title: 'Tech Company Platform',
+    tags: ['Next.js', 'Tailwind CSS', 'Node.js', 'MongoDB'],
     image: img5,
-    description: 'A Tech Company website built with Next.js, Tailwind CSS, Node.js, and MongoDB.',
+    description: 'A modern tech company website built with Next.js for optimal performance, featuring server-side rendering and dynamic content management.',
     link: 'https://fahracity-updated.vercel.app/',
     github: 'https://github.com/HafizMudassirHusain/faracity'
   },
@@ -35,16 +37,16 @@ const projects = [
     title: 'E-commerce Platform',
     tags: ['React', 'Node.js', 'MongoDB'],
     image: img1,
-    description: 'Full-featured online store with payment integration',
+    description: 'Full-featured online store with secure payment integration, shopping cart functionality, and comprehensive product management.',
     link: 'https://furniro1.vercel.app/',
     github: 'https://github.com/HafizMudassirHusain/Furniro'
   },
   {
     id: 4,
-    title: 'Restuarent Website',
+    title: 'Restaurant Website',
     tags: ['Next.js', 'Tailwind CSS', 'MongoDB'],
     image: img2,
-    description: 'A modern, responsive portfolio website to showcase projects and blogs.',
+    description: 'A modern, responsive restaurant website showcasing menu items, reservations, and an elegant dining experience presentation.',
     link: 'https://al-frontend-eight.vercel.app/',
     github: 'https://github.com/HafizMudassirHusain/AL-Frontend'
   },
@@ -53,7 +55,7 @@ const projects = [
     title: 'Portfolio 2.0',
     tags: ['React', 'Firebase'],
     image: img4,
-    description: 'A second version portfolio showcasing animation and SEO practices.',
+    description: 'A second version portfolio showcasing advanced animations, SEO best practices, and modern web development techniques.',
     link: 'https://hafizmudassirhusain.netlify.app/',
     github: 'https://github.com/HafizMudassirHusain/orgnlwhiteport'
   },
@@ -62,319 +64,295 @@ const projects = [
     title: 'Adventure Travel Site',
     tags: ['React', 'GSAP'],
     image: img6,
-    description: 'A visually rich adventure site with parallax scroll effects.',
+    description: 'A visually rich adventure travel website with immersive parallax scroll effects and stunning visual storytelling.',
     link: 'https://adventureguidence.netlify.app/',
     github: 'https://github.com/HafizMudassirHusain/SecAdvantureweb'
   },
 ];
 
-export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('All');
-  
-  const sectionRef = useRef(null);
-  const badgeRef = useRef(null);
-  const headingRef = useRef(null);
-  const subheadingRef = useRef(null);
-  const filterButtonsRef = useRef([]);
-  const projectCardsRef = useRef([]);
-  const projectImagesRef = useRef([]);
-  
-  const allTags = ['All', ...new Set(projects.flatMap(project => project.tags))];
-  
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter(project => project.tags.includes(activeFilter));
+/* =======================
+   PROJECT PREVIEW COMPONENT
+======================= */
+
+function ProjectPreview({ project, isActive }) {
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        opacity: isActive ? 1 : 0,
+        scale: isActive ? 1 : 0.95,
+      }}
+      transition={{
+        duration: 0.4,
+        ease: [0.4, 0, 0.2, 1],
+      }}
+      className={`absolute inset-0 ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+    >
+      <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900 dark:bg-slate-950 border border-slate-800 dark:border-slate-800 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/50 to-slate-950/50 z-10" />
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-slate-950/95 to-transparent z-20">
+          <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 text-xs font-medium rounded-full bg-teal-500/20 text-teal-400 border border-teal-500/30"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* =======================
+   PROJECT ITEM COMPONENT
+======================= */
+
+function ProjectItem({ project, index, isActive, onInView }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    margin: '-40% 0px -40% 0px',
+    once: false,
+  });
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Badge animation
-      if (badgeRef.current) {
-        gsap.from(badgeRef.current, {
-          scrollTrigger: {
-            trigger: badgeRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          },
-          opacity: 0,
-          scale: 0.8,
-          y: -20,
-          duration: 0.6,
-          ease: 'back.out(1.7)'
-        });
-      }
+    if (isInView && onInView) {
+      onInView(index);
+    }
+  }, [isInView, index, onInView]);
 
-      // Heading animation
-      gsap.from(headingRef.current, {
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        ease: 'power3.out'
-      });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className={`min-h-[70vh] flex flex-col justify-center py-12 lg:py-20 px-6 transition-opacity duration-500 ${
+        isActive ? 'opacity-100' : 'opacity-40'
+      }`}
+    >
+      <div className="max-w-2xl">
+        <motion.h2
+          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {project.title}
+        </motion.h2>
 
-      // Subheading animation
-      gsap.from(subheadingRef.current, {
-        scrollTrigger: {
-          trigger: subheadingRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.2,
-        ease: 'power2.out'
-      });
+        <motion.p
+          className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          {project.description}
+        </motion.p>
 
-      // Filter buttons stagger
-      gsap.from(filterButtonsRef.current, {
-        scrollTrigger: {
-          trigger: filterButtonsRef.current[0],
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 0,
-        y: 20,
-        scale: 0.9,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: 'back.out(1.7)'
-      });
+        <motion.div
+          className="flex flex-wrap gap-3 mb-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-4 py-2 text-sm font-medium rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800"
+            >
+              {tag}
+            </span>
+          ))}
+        </motion.div>
 
-      // Animate projects
-      const animateProjects = () => {
-        projectCardsRef.current.forEach((card, index) => {
-          if (!card) return;
-          
-          gsap.from(card, {
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse'
-            },
-            opacity: 0,
-            y: 50,
-            scale: 0.95,
-            rotation: 2,
-            duration: 0.6,
-            delay: index * 0.1,
-            ease: 'power3.out'
-          });
+        <motion.div
+          className="flex gap-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-medium transition-colors duration-200"
+          >
+            <FiExternalLink className="w-4 h-4" />
+            Live Demo
+          </a>
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-gray-900 dark:text-white font-medium transition-colors duration-200"
+          >
+            <FiGithub className="w-4 h-4" />
+            View Code
+          </a>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
 
-          // Parallax effect for images
-          const image = projectImagesRef.current[index];
-          if (image) {
-            gsap.to(image, {
-              scrollTrigger: {
-                trigger: card,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
-              },
-              y: -30,
-              scale: 1.1,
-              ease: 'none'
-            });
-          }
+/* =======================
+   MAIN PORTFOLIO COMPONENT
+======================= */
 
-          // Hover effects
-          card.addEventListener('mouseenter', () => {
-            gsap.to(card, {
-              y: -10,
-              scale: 1.02,
-              boxShadow: '0 25px 50px rgba(0,0,0,0.15)',
-              duration: 0.3,
-              ease: 'power2.out'
-            });
-            
-            if (image) {
-              gsap.to(image, {
-                scale: 1.15,
-                duration: 0.3,
-                ease: 'power2.out'
-              });
-            }
-          });
+export default function Portfolio() {
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const previewContainerRef = useRef(null);
 
-          card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-              y: 0,
-              scale: 1,
-              boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
-              duration: 0.3,
-              ease: 'power2.out'
-            });
-            
-            if (image) {
-              gsap.to(image, {
-                scale: 1.1,
-                duration: 0.3,
-                ease: 'power2.out'
-              });
-            }
-          });
-        });
-      };
-
-      animateProjects();
-
-      // Filter button hover effects
-      filterButtonsRef.current.forEach((button) => {
-        if (!button) return;
-        
-        button.addEventListener('mouseenter', () => {
-          gsap.to(button, {
-            scale: 1.05,
-            y: -2,
-            duration: 0.2,
-            ease: 'power2.out'
-          });
-        });
-
-        button.addEventListener('mouseleave', () => {
-          gsap.to(button, {
-            scale: 1,
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out'
-          });
-        });
-      });
-
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [activeFilter]);
-
-  const handleFilterChange = (tag) => {
-    setActiveFilter(tag);
-    // Reset refs for re-animation
-    projectCardsRef.current = [];
-    projectImagesRef.current = [];
+  const handleProjectInView = (index) => {
+    setActiveProjectIndex(index);
   };
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-gradient-to-b from-teal-50 to-white dark:from-slate-900 dark:to-slate-800 py-12 md:py-20 px-4 sm:px-6 lg:px-8 transition-colors duration-500"
+      id="projects"
+      className="relative bg-gradient-to-b from-teal-50 to-white dark:from-slate-900 dark:to-slate-800 py-20 md:py-32 transition-colors duration-500"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <span
-            ref={badgeRef}
-            className="inline-block py-1 px-3 mb-3 md:mb-4 text-xs font-semibold text-teal-600 dark:text-teal-400 bg-teal-100 dark:bg-slate-800 rounded-full transition-colors duration-500"
-          >
+        <motion.div
+          ref={headerRef}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16 md:mb-24"
+        >
+          <span className="inline-block py-1 px-3 mb-4 text-xs font-semibold text-teal-600 dark:text-teal-400 bg-teal-100 dark:bg-slate-800 rounded-full">
             PORTFOLIO
           </span>
-          <h2
-            ref={headingRef}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6"
-          >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4">
             My <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-600">Projects</span>
           </h2>
-          <p
-            ref={subheadingRef}
-            className="max-w-2xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-300 px-4"
-          >
+          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
             A collection of my recent work showcasing different technologies and design approaches.
           </p>
+        </motion.div>
+
+        {/* Desktop Split Layout */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20">
+          {/* LEFT COLUMN - Scrollable Projects List */}
+          <div className="relative">
+            <div className="space-y-0">
+              {projects.map((project, index) => (
+                <ProjectItem
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  isActive={activeProjectIndex === index}
+                  onInView={handleProjectInView}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN - Sticky Preview */}
+          <div className="sticky top-24 h-[calc(100vh-8rem)]">
+            <div ref={previewContainerRef} className="relative w-full h-full">
+              {projects.map((project, index) => (
+                <ProjectPreview
+                  key={project.id}
+                  project={project}
+                  isActive={activeProjectIndex === index}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 px-2">
-          {allTags.map((tag, index) => (
-            <button
-              key={tag}
-              ref={el => filterButtonsRef.current[index] = el}
-              onClick={() => handleFilterChange(tag)}
-              className={`px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm font-medium rounded-full transition-all duration-300 ${
-                activeFilter === tag
-                  ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-md md:shadow-lg shadow-cyan-500/20 dark:shadow-teal-500/30'
-                  : 'text-gray-600 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
-              }`}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {filteredProjects.map((project, index) => (
-            <div
+        {/* Mobile Layout - Compact Grid */}
+        <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          {projects.map((project, index) => (
+            <motion.div
               key={project.id}
-              ref={el => projectCardsRef.current[index] = el}
-              className="group relative overflow-hidden rounded-lg md:rounded-xl bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-all duration-500 border border-gray-100 dark:border-slate-700"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               {/* Image */}
-              <div className="relative h-48 sm:h-52 md:h-60 overflow-hidden">
+              <div className="relative h-40 sm:h-48 overflow-hidden bg-slate-900">
                 <img
-                  ref={el => projectImagesRef.current[index] = el}
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 md:p-6">
-                  <div className="translate-y-0 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white text-xs md:text-sm mb-2">{project.description}</p>
-                    <div className="flex gap-2 flex-wrap">
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full bg-white text-gray-900 hover:bg-gray-100"
-                      >
-                        Live Demo
-                      </a>
-                      <a 
-                        href={project.github} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full bg-gray-800 text-white hover:bg-gray-700"
-                      >
-                        View Code
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
               </div>
 
               {/* Content */}
-              <div className="p-4 md:p-6">
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="p-4 sm:p-5">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-1">
                   {project.title}
                 </h3>
-                <div className="flex flex-wrap gap-1.5 md:gap-2">
-                  {project.tags.map((tag) => (
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2 leading-snug">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {project.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 text-xs font-medium rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400"
+                      className="px-2 py-0.5 text-xs font-medium rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800"
                     >
                       {tag}
                     </span>
                   ))}
+                  {project.tags.length > 3 && (
+                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400">
+                      +{project.tags.length - 3}
+                    </span>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-teal-600 hover:bg-teal-700 text-white transition-colors duration-200"
+                  >
+                    <FiExternalLink className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Live</span>
+                    <span className="sm:hidden">Demo</span>
+                  </a>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-gray-900 dark:text-white transition-colors duration-200"
+                  >
+                    <FiGithub className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Code</span>
+                    <span className="sm:hidden">Git</span>
+                  </a>
                 </div>
               </div>
-              
-              {/* View More Button */}
-              <button
-                onClick={() => setSelectedProject(project)}
-                className="absolute top-3 right-3 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/90 dark:bg-gray-800/90 rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm md:shadow-md hover:bg-white dark:hover:bg-gray-700"
-                aria-label="View project details"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </button>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

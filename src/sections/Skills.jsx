@@ -456,7 +456,7 @@ export default function Skills() {
                     index % 2 === 0 ? "-right-2" : "-left-2"
                   } shadow-md`}
                 />
-
+                
                 {/* Timeline Card */}
                 <div className="p-6 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm cursor-pointer transition-all duration-300">
                   <p className="text-sm text-teal-600 dark:text-teal-400 mb-1 font-medium">
@@ -472,7 +472,7 @@ export default function Skills() {
                     {item.description}
                   </p>
                 </div>
-              </div>
+                </div>
             ))}
           </div>
         </div>
