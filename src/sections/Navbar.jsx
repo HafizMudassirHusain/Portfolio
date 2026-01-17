@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
-import { Link } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     // Check localStorage first, then system preference
@@ -40,11 +44,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', to: 'home' },
-    { name: 'About', to: 'about' },
-    { name: 'Projects', to: 'projects' },
-    { name: 'Skills', to: 'skills' },
-    { name: 'Contact', to: 'contact' },
+    { name: 'Home', to: 'home', route: '/' },
+    { name: 'About', to: 'about', route: null },
+    { name: 'Projects', to: 'projects', route: '/projects' },
+    { name: 'Skills', to: 'skills', route: null },
+    { name: 'Contact', to: 'contact', route: null },
   ];
 
   const toggleTheme = () => {
@@ -75,7 +79,8 @@ export default function Navbar() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link
+          {isHomePage ? (
+            <ScrollLink
             to="home"
             smooth={true}
             duration={500}
@@ -87,27 +92,74 @@ export default function Navbar() {
             >
               HMH
             </motion.div>
-          </Link>
+            </ScrollLink>
+          ) : (
+            <RouterLink
+              to="/"
+              className="flex items-center cursor-pointer"
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-teal-500"
+              >
+                HMH
+              </motion.div>
+            </RouterLink>
+          )}
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
+            {navLinks.map((link) => {
+              if (link.route) {
+                return (
+                  <RouterLink
+                    key={link.to}
+                    to={link.route}
+                    className="relative text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white cursor-pointer transition-colors group"
+                  >
+                    {link.name}
+                    <motion.span
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 dark:bg-teal-500 transition-all duration-300 group-hover:w-full"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: '100%' }}
+                    />
+                  </RouterLink>
+                );
+              } else if (isHomePage) {
+                return (
+                  <ScrollLink
                 key={link.to}
                 to={link.to}
                 smooth={true}
                 duration={500}
                 offset={-80}
-                className="relative text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white cursor-pointer transition-colors group"
+                    className="relative text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white cursor-pointer transition-colors group"
+                  >
+                    {link.name}
+                    <motion.span
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 dark:bg-teal-500 transition-all duration-300 group-hover:w-full"
+                      initial={{ width: 0 }}
+                      whileHover={{ width: '100%' }}
+                    />
+                  </ScrollLink>
+                );
+              } else {
+                return (
+                  <RouterLink
+                    key={link.to}
+                    to={`/#${link.to}`}
+                    className="relative text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white cursor-pointer transition-colors group"
               >
                 {link.name}
                 <motion.span
-                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 dark:bg-teal-500 transition-all duration-300 group-hover:w-full"
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 dark:bg-teal-500 transition-all duration-300 group-hover:w-full"
                   initial={{ width: 0 }}
                   whileHover={{ width: '100%' }}
                 />
-              </Link>
-            ))}
+                  </RouterLink>
+                );
+              }
+            })}
 
             {/* Theme Toggle */}
             {/* <button
@@ -166,19 +218,45 @@ export default function Navbar() {
           >
             <div className="container mx-auto px-6 py-4">
               <div className="flex flex-col space-y-4">
-                {navLinks.map((link) => (
-                  <Link
+                {navLinks.map((link) => {
+                  if (link.route) {
+                    return (
+                      <RouterLink
+                        key={link.to}
+                        to={link.route}
+                        onClick={() => setIsOpen(false)}
+                        className="text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                      >
+                        {link.name}
+                      </RouterLink>
+                    );
+                  } else if (isHomePage) {
+                    return (
+                      <ScrollLink
                     key={link.to}
                     to={link.to}
                     smooth={true}
                     duration={500}
                     offset={-80}
                     onClick={() => setIsOpen(false)}
-                    className="text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                        className="text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                      >
+                        {link.name}
+                      </ScrollLink>
+                    );
+                  } else {
+                    return (
+                      <RouterLink
+                        key={link.to}
+                        to={`/#${link.to}`}
+                        onClick={() => setIsOpen(false)}
+                        className="text-teal-100 dark:text-gray-200 hover:text-white dark:hover:text-white py-2 px-4 rounded-lg hover:bg-teal-800 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                   >
                     {link.name}
-                  </Link>
-                ))}
+                      </RouterLink>
+                    );
+                  }
+                })}
               </div>
             </div>
           </motion.div>

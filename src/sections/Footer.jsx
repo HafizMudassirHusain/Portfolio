@@ -189,7 +189,7 @@ export default function Footer() {
         gsap.from(copyrightRef.current, {
           scrollTrigger: {
             trigger: copyrightRef.current,
-            start: 'top 90%',
+            start: 'bottom 0%',
             toggleActions: 'play none none reverse'
           },
           opacity: 0,
@@ -282,14 +282,14 @@ export default function Footer() {
 
         {/* Copyright */}
         <div
-          ref={copyrightRef}
+          // ref={copyrightRef}
           className="flex flex-col md:flex-row justify-between items-center text-center"
         >
           <p className="text-teal-300 dark:text-gray-400 mb-4 md:mb-0">
             &copy; {currentYear} Hafiz Mudassir. All rights reserved.
           </p>
           <p className="text-teal-200 dark:text-gray-400 flex items-center">
-            Made with <FiHeart className="mx-1 text-rose-400" /> using React & Tailwind CSS
+            Made with <FiHeart className="mx-1 text-teal-400" /> using React & Tailwind CSS
           </p>
         </div>
       </div>

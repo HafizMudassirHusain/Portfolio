@@ -71,8 +71,8 @@ const skillCategories = [
 
 const experienceItems = [
   {
-    year: "2025 Feb - Present",
-    role: "Senior Web Developer",
+    year: "2024 Feb - 2025 June",
+    role: " Web Developer",
     company: "TazQ Solution",
     description:
       "Leading the frontend team building responsive web applications with Modern frameworks",
