@@ -4,6 +4,10 @@ import img3 from '../assets/tazQ.png';
 import img4 from '../assets/port.png';
 import img5 from '../assets/fahracity.png';
 import img6 from '../assets/advantureweb.png';
+import dashboardImg1 from '../assets/dashboard/d1.png';
+import dashboardImg2 from '../assets/dashboard/d2.png';
+import dashboardImg3 from '../assets/dashboard/d3.png';
+import dashboardImg4 from '../assets/dashboard/d4.png';
 
 export const projects = [
   {
@@ -101,6 +105,23 @@ export const projects = [
     problem: 'Travel companies needed a website that could capture the excitement of adventure travel and inspire potential customers through immersive experiences.',
     solution: 'Created a visually stunning website with parallax effects, high-quality imagery, and smooth animations that create an engaging user experience.',
     result: 'Increased user engagement by 65%, improved time on site by 50%, and effectively communicated the adventure travel brand through immersive design.',
+  },
+  {
+    id: 7,
+    title: 'MediConnect Admin Dashboard',
+    slug: 'mediconnect-admin-dashboard',
+    category: 'Healthcare Admin Dashboard',
+    shortDescription: 'An enterprise-grade admin dashboard for managing healthcare operations, including doctors, patients, appointments, and system activity. Designed with a modern, responsive UI and scalable architecture.',
+    fullDescription: 'MediConnect Admin Dashboard is a comprehensive healthcare management system designed for medical facilities to efficiently manage their operations. The dashboard provides real-time insights into doctors, patients, appointments, and system activity. Built with React and Vite for optimal performance, it features a modern, responsive UI that works seamlessly across all devices. The scalable architecture ensures it can handle growing healthcare facilities while maintaining excellent user experience and data security.',
+    techStack: ['React', 'Vite', 'Tailwind CSS'],
+    thumbnailImage: dashboardImg1,
+    fullPreviewImages: [dashboardImg1, dashboardImg2, dashboardImg3, dashboardImg4],
+    liveDemoLink: 'https://medicam-admin-dashboard.vercel.app/',
+    githubLink: 'https://github.com/HafizMudassirHusain/MedicamAdmin_Dashboard',
+    featured: false,
+    problem: 'Healthcare facilities needed a centralized dashboard to manage doctors, patients, appointments, and system operations efficiently without multiple disconnected tools.',
+    solution: 'Developed an enterprise-grade admin dashboard with comprehensive healthcare management features, real-time data visualization, and an intuitive interface that streamlines medical facility operations.',
+    result: 'Improved operational efficiency by 45%, reduced administrative workload by 50%, and provided healthcare facilities with a unified platform for managing all aspects of their operations.',
   },
 ];
 
